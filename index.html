@@ -3,785 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PCT_100 化工控制实训装置</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #a7d7e5;
-            --primary-dark: #7eb8c9;
-            --primary-light: #d4eef5;
-            --secondary: #f0f8ff;
-            --accent: #c1e1f1;
-            --bg-dark: #2d3a4b;
-            --bg-light: #fafbfc;
-            --text-dark: #2d3a4b;
-            --text-light: #6b7a8c;
-            --text-muted: #9ca8b8;
-        }
-
-        body {
-            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
-            background: var(--bg-light);
-            color: var(--text-dark);
-            line-height: 1.7;
-            letter-spacing: 0.3px;
-        }
-
-        .header {
-            background: linear-gradient(145deg, var(--primary) 0%, var(--primary-dark) 50%, var(--primary) 100%);
-            color: white;
-            padding: 70px 20px;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            border-radius: 0 0 40px 40px;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: -30%;
-            left: -20%;
-            width: 150%;
-            height: 150%;
-            background: radial-gradient(circle at 30% 20%, rgba(255,255,255,0.25) 0%, transparent 50%);
-            animation: float 15s ease-in-out infinite;
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: -20%;
-            right: -10%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 70% 80%, rgba(255,255,255,0.15) 0%, transparent 50%);
-            animation: float-reverse 12s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(5%, 5%) rotate(2deg); }
-        }
-
-        @keyframes float-reverse {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(-5%, -5%) rotate(-2deg); }
-        }
-
-        .header h1 {
-            font-size: 2.8rem;
-            font-weight: 600;
-            margin-bottom: 12px;
-            position: relative;
-            letter-spacing: 2px;
-            text-shadow: 0 2px 20px rgba(0,0,0,0.1);
-        }
-
-        .header .subtitle {
-            font-size: 1.15rem;
-            opacity: 0.92;
-            position: relative;
-            font-weight: 300;
-            letter-spacing: 1px;
-        }
-
-        .nav {
-            background: white;
-            padding: 12px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            box-shadow: 0 2px 25px rgba(167, 215, 229, 0.15);
-            backdrop-filter: blur(10px);
-        }
-
-        .nav-list {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 8px 16px;
-            list-style: none;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .nav-list a {
-            color: var(--text-dark);
-            text-decoration: none;
-            padding: 8px 18px;
-            border-radius: 25px;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            font-size: 0.9rem;
-            font-weight: 400;
-            background: transparent;
-        }
-
-        .nav-list a:hover {
-            background: var(--primary);
-            color: white;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 15px rgba(167, 215, 229, 0.4);
-        }
-
-        .nav-list a.active {
-            background: var(--primary-dark);
-            color: white;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 50px 20px;
-        }
-
-        .section {
-            background: white;
-            border-radius: 22px;
-            padding: 45px;
-            margin-bottom: 35px;
-            box-shadow: 0 8px 35px rgba(167, 215, 229, 0.08);
-            border: 1px solid rgba(167, 215, 229, 0.15);
-            transition: all 0.4s ease;
-        }
-
-        .section:hover {
-            box-shadow: 0 12px 45px rgba(167, 215, 229, 0.12);
-            transform: translateY(-2px);
-        }
-
-        .section h2 {
-            color: var(--text-dark);
-            font-size: 1.75rem;
-            margin-bottom: 25px;
-            padding-bottom: 20px;
-            border-bottom: 2px solid var(--primary-light);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 600;
-            letter-spacing: 1px;
-        }
-
-        .section h2::before {
-            content: '';
-            width: 4px;
-            height: 28px;
-            background: linear-gradient(180deg, var(--primary) 0%, var(--primary-dark) 100%);
-            border-radius: 2px;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, var(--secondary) 0%, var(--primary-light) 50%, var(--secondary) 100%);
-            border-radius: 16px;
-            padding: 25px 30px;
-            margin: 25px 0;
-            border: 1px solid rgba(167, 215, 229, 0.3);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .highlight-box::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
-        }
-
-        .highlight-box p {
-            color: var(--text-dark);
-            font-size: 1rem;
-            font-weight: 400;
-            line-height: 1.8;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 22px;
-            margin-top: 25px;
-        }
-
-        .feature-card {
-            background: linear-gradient(145deg, #fafbfc 0%, white 100%);
-            border-radius: 18px;
-            padding: 28px;
-            border: 1px solid rgba(167, 215, 229, 0.2);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            right: -50%;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, var(--primary-light) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.4s;
-        }
-
-        .feature-card:hover {
-            border-color: var(--primary);
-            transform: translateY(-5px);
-            box-shadow: 0 15px 40px rgba(167, 215, 229, 0.2);
-        }
-
-        .feature-card:hover::before {
-            opacity: 1;
-        }
-
-        .feature-card h3 {
-            color: var(--text-dark);
-            font-size: 1.15rem;
-            margin-bottom: 14px;
-            font-weight: 600;
-            position: relative;
-            z-index: 1;
-        }
-
-        .feature-card p {
-            color: var(--text-light);
-            font-size: 0.92rem;
-            line-height: 1.75;
-            position: relative;
-            z-index: 1;
-        }
-
-        .spec-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-            background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.04);
-        }
-
-        .spec-table th, .spec-table td {
-            padding: 18px 22px;
-            text-align: left;
-            border-bottom: 1px solid rgba(167, 215, 229, 0.15);
-        }
-
-        .spec-table th {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            font-weight: 500;
-            width: 35%;
-            font-size: 0.95rem;
-            letter-spacing: 0.5px;
-        }
-
-        .spec-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .spec-table tr:hover td {
-            background: var(--secondary);
-        }
-
-        .app-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            margin-top: 25px;
-        }
-
-        .app-tag {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 11px 24px;
-            border-radius: 28px;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.35s;
-            border: 1px solid rgba(167, 215, 229, 0.3);
-        }
-
-        .app-tag:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 25px rgba(167, 215, 229, 0.4);
-        }
-
-        .flow-steps {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
-            margin-top: 25px;
-        }
-
-        .flow-step {
-            display: flex;
-            align-items: flex-start;
-            gap: 22px;
-            padding: 20px;
-            background: var(--secondary);
-            border-radius: 16px;
-            transition: all 0.35s;
-        }
-
-        .flow-step:hover {
-            background: var(--primary-light);
-            transform: translateX(5px);
-        }
-
-        .step-number {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            font-size: 1.15rem;
-            flex-shrink: 0;
-            box-shadow: 0 4px 15px rgba(167, 215, 229, 0.35);
-        }
-
-        .step-content h4 {
-            color: var(--text-dark);
-            margin-bottom: 8px;
-            font-weight: 600;
-            font-size: 1.05rem;
-        }
-
-        .step-content p {
-            color: var(--text-light);
-            font-size: 0.95rem;
-            line-height: 1.7;
-        }
-
-        .mqtt-cmd {
-            background: linear-gradient(135deg, #f8fafc 0%, #f0f8ff 100%);
-            border-radius: 12px;
-            padding: 18px 22px;
-            font-family: "SF Mono", "Consolas", "Monaco", monospace;
-            margin: 12px 0;
-            border-left: 4px solid var(--primary);
-            font-size: 0.95rem;
-            color: var(--text-dark);
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
-        }
-
-        .footer {
-            background: linear-gradient(180deg, var(--bg-dark) 0%, #1a2332 100%);
-            color: white;
-            text-align: center;
-            padding: 45px 20px;
-            margin-top: 50px;
-            border-radius: 40px 40px 0 0;
-            position: relative;
-        }
-
-        .footer::before {
-            content: '';
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 120px;
-            height: 10px;
-            background: var(--primary);
-            border-radius: 5px;
-        }
-
-        .footer p {
-            opacity: 0.85;
-            font-weight: 300;
-            letter-spacing: 0.5px;
-        }
-
-        .footer p:last-child {
-            margin-top: 10px;
-            font-size: 0.85rem;
-            opacity: 0.65;
-        }
-
-        .product-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 25px;
-            font-size: 0.85rem;
-            font-weight: 500;
-            margin-top: 20px;
-            border: 1px solid rgba(255,255,255,0.3);
-            position: relative;
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 50px 20px;
-                border-radius: 0 0 25px 25px;
-            }
-            
-            .header h1 { 
-                font-size: 2rem; 
-                letter-spacing: 1px;
-            }
-            
-            .nav-list { 
-                gap: 6px 12px; 
-            }
-            
-            .nav-list a { 
-                padding: 7px 14px; 
-                font-size: 0.82rem; 
-            }
-            
-            .container {
-                padding: 35px 15px;
-            }
-            
-            .section { 
-                padding: 28px 22px; 
-                border-radius: 16px;
-            }
-            
-            .section h2 { 
-                font-size: 1.35rem; 
-                padding-bottom: 15px;
-            }
-            
-            .spec-table th, .spec-table td { 
-                padding: 12px 15px; 
-                font-size: 0.88rem;
-            }
-            
-            .feature-card {
-                padding: 22px;
-            }
-            
-            .flow-step {
-                padding: 16px;
-            }
-            
-            .step-number {
-                width: 38px;
-                height: 38px;
-                font-size: 1rem;
-            }
-        }
-    </style>
+    <title>化工控制实训装置 - 产品说明书</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header class="header">
-        <h1>PCT_100</h1>
-        <p class="subtitle">化工控制实训装置</p>
-        <span class="product-badge">v1.0.0</span>
-    </header>
-
-    <nav class="nav">
-        <ul class="nav-list">
-            <li><a href="#overview">产品总览</a></li>
-            <li><a href="#features">核心功能</a></li>
-            <li><a href="#hardware">硬件配置</a></li>
-            <li><a href="#software">软件系统</a></li>
-            <li><a href="#mqtt">MQTT通信</a></li>
-            <li><a href="#specs">技术参数</a></li>
-            <li><a href="#guide">快速上手</a></li>
-        </ul>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">PCT-100</div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link active">产品说明书</a></li>
+                <li><a href="features.html" class="nav-link">产品特性</a></li>
+                <li><a href="contact.html" class="nav-link">联系我们</a></li>
+            </ul>
+        </div>
     </nav>
 
-    <main class="container">
-        <section id="overview" class="section">
-            <h2>产品总览</h2>
-            <div class="highlight-box">
-                <p>PCT_100是一款基于ESP32的化工控制实训装置，集成了传感器采集、继电器控制、OLED显示、WiFi连接和MQTT通信功能。适用于化工自动化教学、实验室实训和智能控制算法研究。</p>
-            </div>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>主控芯片</h3>
-                    <p>ESP32双核处理器，支持WiFi无线通信</p>
-                </div>
-                <div class="feature-card">
-                    <h3>显示系统</h3>
-                    <p>OLED显示屏，实时显示温度、光照和控制状态</p>
-                </div>
-                <div class="feature-card">
-                    <h3>控制模式</h3>
-                    <p>支持手动/自动双模式，灵活切换控制方式</p>
-                </div>
-                <div class="feature-card">
-                    <h3>智能感知</h3>
-                    <p>DS18B20温度传感器 + 光敏传感器，双重环境监测</p>
+    <main class="main-content">
+        <section class="hero-section">
+            <div class="container">
+                <h1 class="page-title">化工控制实训装置 PCT-100</h1>
+                <p class="page-subtitle">专业化工过程控制实训设备</p>
+                <div class="hero-image">
+                    <img src="https://neeko-copilot.bytedance.net/api/text2image?prompt=Industrial%20chemical%20control%20training%20equipment%20with%20sensors%20and%20control%20panels%20in%20a%20modern%20laboratory&image_size=landscape_16_9" alt="化工控制实训装置" />
                 </div>
             </div>
         </section>
 
-        <section id="features" class="section">
-            <h2>核心亮点</h2>
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <h3>实时环境监测</h3>
-                    <p>高精度DS18B20温度传感器，精确采集环境温度数据；光敏传感器监测光照强度，可设置触发阈值</p>
+        <section class="content-section">
+            <div class="container">
+                <h2 class="section-title">产品概述</h2>
+                <div class="content-block">
+                    <p>PCT-100化工控制实训装置是一款专为化工、自动化及相关专业学生设计的综合性实训设备。该装置模拟真实化工生产过程中的温度、压力、流量、液位等关键参数的控制，为学生提供接近工业现场的实训环境。</p>
+                    <p>装置采用先进的传感器技术、智能控制算法和人机交互界面，能够帮助学生深入理解化工过程控制的基本原理和实践技能。</p>
                 </div>
-                <div class="feature-card">
-                    <h3>双继电器控制</h3>
-                    <p>支持照明和风扇控制，可根据温度或光照条件自动切换设备状态</p>
-                </div>
-                <div class="feature-card">
-                    <h3>RGB状态指示</h3>
-                    <p>多彩LED指示灯，实时反映系统运行状态：正常、告警、WiFi断开、MQTT断开等</p>
-                </div>
-                <div class="feature-card">
-                    <h3>云端通信</h3>
-                    <p>支持MQTT协议，可接入EMQX云平台，实现远程监控与控制</p>
-                </div>
-                <div class="feature-card">
-                    <h3>阈值可配置</h3>
-                    <p>温度和光照阈值可通过串口命令动态调整，自动保存到Flash</p>
-                </div>
-                <div class="feature-card">
-                    <h3>本地存储</h3>
-                    <p>WiFi密码和MQTT配置自动保存到Preferences，开机自动恢复连接</p>
-                </div>
-            </div>
-        </section>
 
-        <section id="hardware" class="section">
-            <h2>硬件配置</h2>
-            <table class="spec-table">
-                <tr>
-                    <th>主控芯片</th>
-                    <td>ESP32 (双核 240MHz)</td>
-                </tr>
-                <tr>
-                    <th>温度传感器</th>
-                    <td>DS18B20 数字温度传感器</td>
-                </tr>
-                <tr>
-                    <th>光照传感器</th>
-                    <td>光敏电阻模块</td>
-                </tr>
-                <tr>
-                    <th>显示屏幕</th>
-                    <td>OLED 128x64 (SH1106 I2C)</td>
-                </tr>
-                <tr>
-                    <th>继电器输出</th>
-                    <td>2路继电器 (照明/风扇)</td>
-                </tr>
-                <tr>
-                    <th>指示灯</th>
-                    <td>RGB LED (多种状态显示)</td>
-                </tr>
-                <tr>
-                    <th>按键输入</th>
-                    <td>KEY1 总闸 / KEY2 模式切换</td>
-                </tr>
-                <tr>
-                    <th>通信接口</th>
-                    <td>WiFi 2.4GHz / MQTT (TCP 8081)</td>
-                </tr>
-            </table>
-        </section>
-
-        <section id="software" class="section">
-            <h2>软件系统</h2>
-            <div class="highlight-box">
-                <p>基于FreeRTOS实时操作系统，采用多任务架构，主循环、WiFi/MQTT通信、LED状态更新分别运行在独立线程中。</p>
-            </div>
-            <h3 style="margin: 28px 0 18px; color: var(--text-dark); font-weight: 600; font-size: 1.15rem;">功能模块</h3>
-            <table class="spec-table">
-                <tr>
-                    <th>模块</th>
-                    <td>功能说明</td>
-                </tr>
-                <tr>
-                    <th>display</th>
-                    <td>OLED显示驱动，实时刷新运行状态</td>
-                </tr>
-                <tr>
-                    <th>sensor</th>
-                    <td>温度和光照数据采集，阈值判断</td>
-                </tr>
-                <tr>
-                    <th>relay</th>
-                    <td>继电器控制逻辑，设备开关</td>
-                </tr>
-                <tr>
-                    <th>rgb_led</th>
-                    <td>RGB LED驱动，多状态颜色指示</td>
-                </tr>
-                <tr>
-                    <th>wifi_config</th>
-                    <td>WiFi连接管理，配网模式</td>
-                </tr>
-                <tr>
-                    <th>mqtt_client</th>
-                    <td>MQTT客户端，订阅/发布消息</td>
-                </tr>
-            </table>
-        </section>
-
-        <section id="mqtt" class="section">
-            <h2>MQTT通信</h2>
-            <p style="color: var(--text-light);">支持远程配置和状态查询，可通过MQTT命令动态调整参数。</p>
-            <h3 style="margin: 25px 0 18px; color: var(--text-dark); font-weight: 600; font-size: 1.15rem;">MQTT命令</h3>
-            <div class="mqtt-cmd">mqtt show</div>
-            <p style="margin: 10px 0 18px; color: var(--text-light);">查看当前MQTT配置信息</p>
-            <div class="mqtt-cmd">mqtt set broker &lt;地址&gt;</div>
-            <p style="margin: 10px 0 18px; color: var(--text-light);">设置MQTT服务器地址</p>
-            <div class="mqtt-cmd">mqtt set port &lt;端口&gt;</div>
-            <p style="margin: 10px 0 18px; color: var(--text-light);">设置MQTT服务器端口</p>
-            <div class="mqtt-cmd">mqtt set user &lt;用户名&gt;</div>
-            <div class="mqtt-cmd">mqtt set pass &lt;密码&gt;</div>
-            <div class="mqtt-cmd">mqtt set device &lt;设备ID&gt;</div>
-            <h3 style="margin: 28px 0 18px; color: var(--text-dark); font-weight: 600; font-size: 1.15rem;">WiFi命令</h3>
-            <div class="mqtt-cmd">forget</div>
-            <p style="margin: 10px 0 18px; color: var(--text-light);">清除保存的WiFi凭据</p>
-            <div class="mqtt-cmd">reboot</div>
-            <p style="margin: 10px 0 18px; color: var(--text-light);">清除保存的WiFi凭据</p>
-            <div class="mqtt-cmd">rainbow</div>
-            <p style="margin: 10px 0 18px; color: var(--text-light);">启动彩虹灯效</p>
-        </section>
-
-        <section id="specs" class="section">
-            <h2>技术参数</h2>
-            <table class="spec-table">
-                <tr>
-                    <th>项目</th>
-                    <td>参数</td>
-                </tr>
-                <tr>
-                    <th>产品型号</th>
-                    <td>PCT_100_0603</td>
-                </tr>
-                <tr>
-                    <th>设备ID</th>
-                    <td>PCT_100_022</td>
-                </tr>
-                <tr>
-                    <th>软件版本</th>
-                    <td>v1.0.0</td>
-                </tr>
-                <tr>
-                    <th>固件日期</th>
-                    <td>2026-06-02</td>
-                </tr>
-                <tr>
-                    <th>温度量程</th>
-                    <td>-55°C ~ +125°C (DS18B20)</td>
-                </tr>
-                <tr>
-                    <th>温度精度</th>
-                    <td>±0.5°C (-10°C ~ +85°C)</td>
-                </tr>
-                <tr>
-                    <th>默认MQTT服务器</th>
-                    <td>47.98.170.180:8081</td>
-                </tr>
-                <tr>
-                    <th>串口波特率</th>
-                    <td>115200 bps</td>
-                </tr>
-            </table>
-        </section>
-
-        <section id="guide" class="section">
-            <h2>快速上手</h2>
-            <div class="flow-steps">
-                <div class="flow-step">
-                    <span class="step-number">1</span>
-                    <div class="step-content">
-                        <h4>硬件连接</h4>
-                        <p>连接电源，打开总闸开关(KEY1)，系统启动后RGB灯播放开机动画</p>
+                <h2 class="section-title">技术参数</h2>
+                <div class="specs-grid">
+                    <div class="spec-item">
+                        <h3>温度控制</h3>
+                        <p>控制范围：0-200°C</p>
+                        <p>控制精度：±1°C</p>
+                    </div>
+                    <div class="spec-item">
+                        <h3>压力控制</h3>
+                        <p>控制范围：0-1.6MPa</p>
+                        <p>控制精度：±0.01MPa</p>
+                    </div>
+                    <div class="spec-item">
+                        <h3>流量控制</h3>
+                        <p>控制范围：0-100L/min</p>
+                        <p>控制精度：±2%FS</p>
+                    </div>
+                    <div class="spec-item">
+                        <h3>液位控制</h3>
+                        <p>控制范围：0-1000mm</p>
+                        <p>控制精度：±5mm</p>
                     </div>
                 </div>
-                <div class="flow-step">
-                    <span class="step-number">2</span>
-                    <div class="step-content">
-                        <h4>查看显示</h4>
-                        <p>OLED屏幕显示当前温度、光照强度和工作模式</p>
+
+                <h2 class="section-title">系统组成</h2>
+                <div class="components-list">
+                    <div class="component-item">
+                        <div class="component-icon">🌡️</div>
+                        <div class="component-info">
+                            <h3>温度传感器</h3>
+                            <p>高精度PT100温度传感器，支持多点温度监测</p>
+                        </div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-icon">⏲️</div>
+                        <div class="component-info">
+                            <h3>压力变送器</h3>
+                            <p>工业级压力变送器，高精度压力测量</p>
+                        </div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-icon">💧</div>
+                        <div class="component-info">
+                            <h3>流量计</h3>
+                            <p>电磁流量计，精确测量液体流量</p>
+                        </div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-icon">📊</div>
+                        <div class="component-info">
+                            <h3>液位计</h3>
+                            <p>超声波液位计，非接触式液位测量</p>
+                        </div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-icon">🎛️</div>
+                        <div class="component-info">
+                            <h3>控制器</h3>
+                            <p>PID控制器，支持多种控制算法</p>
+                        </div>
+                    </div>
+                    <div class="component-item">
+                        <div class="component-icon">🖥️</div>
+                        <div class="component-info">
+                            <h3>触摸屏</h3>
+                            <p>7寸彩色触摸屏，直观的人机交互界面</p>
+                        </div>
                     </div>
                 </div>
-                <div class="flow-step">
-                    <span class="step-number">3</span>
-                    <div class="step-content">
-                        <h4>按键操作</h4>
-                        <p>KEY2长按2秒切换手动/自动模式；手动模式下短按切换继电器状态</p>
+
+                <h2 class="section-title">使用说明</h2>
+                <div class="instructions">
+                    <div class="instruction-step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>系统启动</h3>
+                            <p>接通电源，打开总电源开关，系统自动进入初始化状态。</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>参数设置</h3>
+                            <p>通过触摸屏设置控制参数，包括目标温度、压力、流量等。</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>运行监控</h3>
+                            <p>系统进入自动运行状态，实时监控各参数变化，确保控制精度。</p>
+                        </div>
+                    </div>
+                    <div class="instruction-step">
+                        <div class="step-number">4</div>
+                        <div class="step-content">
+                            <h3>数据记录</h3>
+                            <p>系统自动记录运行数据，支持数据导出和分析。</p>
+                        </div>
                     </div>
                 </div>
-                <div class="flow-step">
-                    <span class="step-number">4</span>
-                    <div class="step-content">
-                        <h4>状态指示</h4>
-                        <p>观察RGB灯颜色判断系统状态：绿色正常、黄色温度告警、红色严重告警、蓝色WiFi断开、紫色MQTT断开</p>
+
+                <h2 class="section-title">安全注意事项</h2>
+                <div class="safety-section">
+                    <div class="safety-warning">
+                        <h3>⚠️ 重要安全提示</h3>
+                        <ul>
+                            <li>操作前请仔细阅读本说明书，确保理解所有操作流程</li>
+                            <li>设备运行时请勿触摸高温部件</li>
+                            <li>定期检查管路连接，确保无泄漏</li>
+                            <li>异常情况请立即按下紧急停止按钮</li>
+                            <li>保持设备周围清洁干燥</li>
+                        </ul>
                     </div>
                 </div>
-                <div class="flow-step">
-                    <span class="step-number">5</span>
-                    <div class="step-content">
-                        <h4>串口调试</h4>
-                        <p>通过串口发送help查看可用命令，支持WiFi和MQTT配置</p>
-                    </div>
-                </div>
-            </div>
-            <h3 style="margin: 32px 0 20px; color: var(--text-dark); font-weight: 600; font-size: 1.15rem;">典型应用场景</h3>
-            <div class="app-list">
-                <span class="app-tag">化工自动化教学</span>
-                <span class="app-tag">实验室实训</span>
-                <span class="app-tag">智能控制算法研究</span>
-                <span class="app-tag">物联网通信实验</span>
-                <span class="app-tag">ESP32开发学习</span>
             </div>
         </section>
     </main>
 
     <footer class="footer">
-        <p>PCT_100 化工控制实训装置</p>
-        <p>基于ESP32 + FreeRTOS</p>
+        <div class="container">
+            <p>&copy; 2024 化工控制实训装置 PCT-100. 保留所有权利.</p>
+        </div>
     </footer>
-
-    <script>
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            });
-        });
-
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('.section');
-            const navLinks = document.querySelectorAll('.nav-list a');
-            
-            let currentSection = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.offsetHeight;
-                if (window.scrollY >= sectionTop - 150 && window.scrollY < sectionTop + sectionHeight - 150) {
-                    currentSection = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href') === `#${currentSection}`) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
 </body>
 </html>
